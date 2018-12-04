@@ -7,12 +7,12 @@ public class Entry {
     private String paymentStartDate;
 
     // results
-    private String _fullName;
-    private String _payPeriod;
-    private int _grossIncome;
-    private int _incomeTax;
-    private int _netIncome;
-    private int _super;
+    private String fullName;
+    private String payPeriod;
+    private int grossIncome;
+    private int incomeTax;
+    private int netIncome;
+    private int superIncome;
 
     Entry(String[] str_arr) throws Exception{
         if (str_arr.length != 5)
@@ -42,40 +42,40 @@ public class Entry {
         return paymentStartDate;
     }
 
-    String get_payPeriod() {
-        if (this._payPeriod == null)
-            this._payPeriod = this.paymentStartDate;
-        return this._payPeriod;
+    String getPayPeriod() {
+        if (this.payPeriod == null)
+            this.payPeriod = this.paymentStartDate;
+        return this.payPeriod;
     }
 
-    int get_grossIncome() {
-        if (this._grossIncome == 0)
-            this._grossIncome = (int) this.annualSalary / 12;
-        return this._grossIncome;
+    int getGrossIncome() {
+        if (this.grossIncome == 0)
+            this.grossIncome = (int) this.annualSalary / 12;
+        return this.grossIncome;
     }
 
-    int get_incomeTax() {
-        if (this._incomeTax == 0)
-            this._incomeTax = calculate_income_tax();
-        return _incomeTax;
+    int getIncomeTax() {
+        if (this.incomeTax == 0)
+            this.incomeTax = calculate_income_tax();
+        return this.incomeTax;
     }
 
-    int get_netIncome() {
-        if (this._netIncome == 0)
-            this._netIncome = this._grossIncome - this._incomeTax;
-        return _netIncome;
+    int getNetIncome() {
+        if (this.netIncome == 0)
+            this.netIncome = this.grossIncome - this.incomeTax;
+        return this.netIncome;
     }
 
-    int get_super() {
-        if (this._super == 0)
-            this._super = (int) (this._grossIncome * this.superRate / 100);
-        return _super;
+    int getSuper() {
+        if (this.superIncome == 0)
+            this.superIncome = (int) (this.grossIncome * this.superRate / 100);
+        return this.superIncome;
     }
 
-    String get_fullName() {
-        if (this._fullName == null)
-            this._fullName = this.firstName + " " + this.lastName;
-        return this._fullName;
+    String getFullName() {
+        if (this.fullName == null)
+            this.fullName = this.firstName + " " + this.lastName;
+        return this.fullName;
     }
 
     private int calculate_income_tax(){
@@ -97,7 +97,7 @@ public class Entry {
     }
 
     String serialize(){
-        return this.get_fullName()+ "," + this.get_payPeriod() + "," + this.get_grossIncome() + ","
-                + this.get_incomeTax() + "," + this.get_netIncome() + "," + this.get_super();
+        return this.getFullName()+ "," + this.getPayPeriod() + "," + this.getGrossIncome() + ","
+                + this.getIncomeTax() + "," + this.getNetIncome() + "," + this.getSuper();
     }
 }
