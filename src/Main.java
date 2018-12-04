@@ -1,3 +1,4 @@
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,11 @@ public class Main {
             try {
                 Entry entry = new Entry(str_arr);
                 inputs.add(entry);
-            } catch (Exception e){
+            } catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+            } catch (InvalidParameterException e){
                 e.printStackTrace();
             }
         }

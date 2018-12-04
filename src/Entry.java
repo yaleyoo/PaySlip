@@ -1,3 +1,5 @@
+import java.security.InvalidParameterException;
+
 public class Entry {
     // inputs
     private String firstName;
@@ -14,17 +16,20 @@ public class Entry {
     private int netIncome;
     private int superIncome;
 
-    Entry(String[] str_arr) throws Exception{
+    Entry(String[] str_arr) throws IndexOutOfBoundsException, NumberFormatException, InvalidParameterException{
         if (str_arr.length != 5)
             throw new IndexOutOfBoundsException();
         // first name
         this.firstName = str_arr[0].trim();
         // last name
         this.lastName = str_arr[1].trim();
-        // annual Salary - assume the input is valid, otherwise, should catch the exception
+        // annual Salary
         this.annualSalary = Float.parseFloat(str_arr[2].trim());
-        // super rate - assume the input is valid, otherwise, should catch the exception
-        String superRate_str = str_arr[3].split("%")[0];
+        // super rate
+        String[] super_arr = str_arr[3].split("%");
+        if (!str_arr[3].matches("^-*[0-9]+%$"))
+            throw new InvalidParameterException("invalid argument super");
+        String superRate_str = super_arr[0];
         this.superRate = Float.parseFloat(superRate_str.trim());
         // start date
         this.paymentStartDate = str_arr[4].trim();
@@ -62,13 +67,13 @@ public class Entry {
 
     int getNetIncome() {
         if (this.netIncome == 0)
-            this.netIncome = this.grossIncome - this.incomeTax;
+            this.netIncome = getGrossIncome() - getIncomeTax();
         return this.netIncome;
     }
 
     int getSuper() {
         if (this.superIncome == 0)
-            this.superIncome = (int) (this.grossIncome * this.superRate / 100);
+            this.superIncome = (int) (getGrossIncome() * this.superRate / 100);
         return this.superIncome;
     }
 
@@ -79,20 +84,17 @@ public class Entry {
     }
 
     private int calculate_income_tax(){
-        if (this.annualSalary >= 0) {
-            if (this.annualSalary <= 18200)
-                return 0;
-            else if (this.annualSalary <= 37000)
-                return (int) Math.round( ((this.annualSalary - 18200) * 0.19) / 12 );
-            else if (this.annualSalary <= 87000)
-                return (int) Math.round( ((3572 + (this.annualSalary - 37000) * 0.325)) / 12 );
-            else if (this.annualSalary <= 180000)
-                return (int) Math.round( ((19822 + (this.annualSalary - 87000) * 0.37)) / 12 );
-            else
-                return (int) Math.round( ((54232 + (this.annualSalary - 180000) * 0.45)) / 12 );
-        }
-        else{
-            return -1;
+        if (this.annualSalary <= 18200)
+            return 0;
+        else if (this.annualSalary <= 37000)
+            return (int) Math.round( ((this.annualSalary - 18200) * 0.19) / 12 );
+        else if (this.annualSalary <= 87000)
+            return (int) Math.round( ((3572 + (this.annualSalary - 37000) * 0.325)) / 12 );
+        else if (this.annualSalary <= 180000)
+            return (int) Math.round( ((19822 + (this.annualSalary - 87000) * 0.37)) / 12 );
+        else {
+            long temp = Math.round(((54232 + (this.annualSalary - 180000) * 0.45)) / 12);
+            return Math.toIntExact(temp);
         }
     }
 
