@@ -44,5 +44,13 @@ David Rudd,01 March – 31 March,5004,922,4082,450
 ```
 
 ## 设计思路
-
+- 读取每行用户输入，以逗号分割输入字符串，当读取到空行时停止
+- 根据用户输入字符串创建Entry对象(通过抛出异常抓取不合法输入并无视)
+- Entry类对外(包内)提供getter方法计算并获取对象的某个属性值
+- Entry类对外(包内)提供serialize方法序列化对象
 ## 运行
+1. 切换工作目录至PaySlip所在文件夹
+2. 运行 ```javac Main.java```
+3. 编译完成后运行 ```java Main```
+4. 输入first name, last name, annual salary, super rate (%), payment start date
+5. 输入空行已结束输入
