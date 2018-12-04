@@ -49,7 +49,7 @@ David Rudd,01 March – 31 March,5004,922,4082,450
 - Entry类对外(包内)提供getter方法计算并获取对象的某个属性值
 - Entry类对外(包内)提供serialize方法序列化对象
 ## 运行
-1. 切换工作目录至PaySlip所在文件夹
+1. 切换工作目录至PaySlip/src所在文件夹
 2. 运行 ```javac Main.java```
 3. 编译完成后运行 ```java Main```
 4. 输入first name, last name, annual salary, super rate (%), payment start date
